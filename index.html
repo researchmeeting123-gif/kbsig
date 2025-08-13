@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KB SIG — 個人網站</title>
+  <meta name="description" content="KB SIG — UofT 工程學生、Nebulearn 創辦人。AI × 翻轉學習 × 正向心理學 × 知識建構。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b0d10;
+      --panel: #11151a;
+      --muted: #9aa4b2;
+      --text: #e8ecf1;
+      --brand: #7aa2ff;
+      --ring: rgba(122,162,255,.35);
+      --card: #0f1318;
+      --border: #1b2129;
+      --success: #2ecc71;
+      --warn: #ffcc66;
+      --cta: #00d4ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 1200px at 80% -10%, rgba(122,162,255,.15), transparent 60%), 
+                  radial-gradient(1000px 1000px at -10% 10%, rgba(0,212,255,.11), transparent 55%),
+                  var(--bg);
+      line-height:1.6;
+    }
+    a{color:var(--brand); text-decoration:none}
+    .container{max-width:1080px; margin:0 auto; padding:24px}
+    header{
+      position:sticky; top:0; z-index:20; backdrop-filter: saturate(1.2) blur(10px);
+      background: linear-gradient(to bottom, rgba(11,13,16,.8), rgba(11,13,16,.35));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0}
+    .nav a.brand{font-weight:800; letter-spacing:.3px}
+    .nav .actions{display:flex; gap:10px; align-items:center}
+    .btn{
+      border:1px solid var(--border);
+      background:linear-gradient(to bottom, #141922, #0d1117);
+      color:var(--text); padding:10px 14px; border-radius:10px; cursor:pointer;
+      transition:.2s transform ease, .2s box-shadow ease, .2s background ease, .2s border-color ease;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.35), 0 0 0 6px var(--ring)}
+    .btn.primary{background:linear-gradient(180deg, #0b2b3a, #071f2b); border-color:#123247; color:#cfefff}
+    .btn.ghost{background:transparent}
+    .badge{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); background:rgba(17,21,26,.7); padding:8px 12px; border-radius:999px; color:var(--muted); font-weight:600}
+    .badge .dot{width:8px; height:8px; border-radius:50%; background:var(--success); box-shadow:0 0 0 4px rgba(46,204,113,.15)}
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; padding:38px 0 22px}
+    @media (max-width: 880px){ .hero{grid-template-columns:1fr} }
+    .card{
+      background:linear-gradient(180deg, rgba(17,22,28,.8), rgba(14,18,23,.8));
+      border:1px solid var(--border);
+      border-radius:18px; padding:20px; box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
+    }
+    .hero .left h1{font-size:42px; line-height:1.15; margin:0 0 12px}
+    .muted{color:var(--muted)}
+    .stack{display:flex; flex-wrap:wrap; gap:12px}
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .pill{padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.03); font-size:13px; color:#d9e2ec}
+    .grid{display:grid; gap:16px}
+    .grid.projects{grid-template-columns:repeat(3, 1fr)}
+    .grid.posts{grid-template-columns:repeat(2, 1fr)}
+    @media (max-width: 980px){ .grid.projects{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 680px){ .grid.projects,.grid.posts{grid-template-columns:1fr} }
+    .project, .post{position:relative; overflow:hidden}
+    .project h3, .post h3{margin:0 0 6px}
+    .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .tag{font-size:12px; padding:4px 10px; border-radius:999px; border:1px solid var(--border); color:#cfe3ff; background:rgba(122,162,255,.08)}
+    .post .meta{font-size:13px; color:var(--muted); margin-bottom:8px}
+    section{margin:22px 0}
+    .section-title{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+    .section-title h2{margin:0; font-size:18px; letter-spacing:.3px}
+    .kpi{display:flex; gap:14px; flex-wrap:wrap; margin-top:12px}
+    .kpi .item{background:linear-gradient(180deg,#0c1218,#0a0f14); border:1px solid var(--border); border-radius:14px; padding:10px 12px; min-width:130px}
+    .kpi .item b{font-size:18px}
+    footer{color:var(--muted); padding:28px 0; text-align:center}
+    .sep{height:1px; background:linear-gradient(90deg, transparent, var(--border), transparent); margin:22px 0}
+    .avatar{
+      width:120px; height:120px; border-radius:16px; background:
+        radial-gradient(50% 60% at 30% 20%, rgba(122,162,255,.22), transparent 60%),
+        radial-gradient(40% 55% at 70% 70%, rgba(0,212,255,.18), transparent 60%), #0e1319;
+      border:1px solid var(--border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 8px 24px rgba(0,0,0,.35);
+    }
+    .about{display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,.03); color:#dbe7ff; font-size:13px}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    /* light mode */
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f7f9fc; --panel:#ffffff; --card:#ffffff; --text:#0b1220; --muted:#5c6b7a; --border:#e7edf5; --ring:rgba(122,162,255,.35) }
+      body{background: radial-gradient(1200px 1200px at 80% -10%, rgba(122,162,255,.18), transparent 60%), radial-gradient(1000px 1000px at -10% 10%, rgba(0,212,255,.12), transparent 55%), var(--bg);}
+      .btn{background:linear-gradient(to bottom, #ffffff, #f3f6fb)}
+      .btn.primary{background:linear-gradient(180deg,#e9f4ff,#dceaff); color:#0b1220; border-color:#cfe0ff}
+      .pill{background:#f7fbff}
+      .tag{color:#234; background:#eef4ff}
+      .card{background:linear-gradient(180deg,#ffffff,#f9fbff)}
+      .kpi .item{background:linear-gradient(180deg,#ffffff,#f4f7fb)}
+      .avatar{background: radial-gradient(50% 60% at 30% 20%, rgba(122,162,255,.35), transparent 60%), radial-gradient(40% 55% at 70% 70%, rgba(0,212,255,.25), transparent 60%), #fff;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#">KB SIG</a>
+      <div class="actions">
+        <a class="btn ghost" href="#projects">專案</a>
+        <a class="btn ghost" href="#writing">文章</a>
+        <a class="btn primary" href="mailto:hello@example.com">聯絡我</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="left card">
+        <span class="badge"><span class="dot"></span> Available for collab / research</span>
+        <h1>UofT 工程 ➜ Nebulearn 創辦人<br/>AI × 翻轉學習 × 正向心理學 × 知識建構</h1>
+        <p class="muted">我是一名就讀多倫多大學（UofT）的工程學生，也是 <b>Nebulearn</b> 的創辦人。關注 AI 原生學習體驗、間隔重複（Leitner/FSRS/SM2）、知識建構（KB/KF）、以及文化回應式教學與 SEL。</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#projects">看看我的專案</a>
+          <a class="btn" href="#about">關於我</a>
+          <a class="btn ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <div class="kpi">
+          <div class="item"><div class="muted">Days Building</div><b>407</b></div>
+          <div class="item"><div class="muted">Active Projects</div><b>3</b></div>
+          <div class="item"><div class="muted">Focus</div><b>EdTech · AI</b></div>
+        </div>
+      </div>
+      <div class="right card">
+        <div class="about">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <h3 style="margin:0 0 6px">最新動態</h3>
+            <p class="muted" style="margin:0">• 正在為 Nebulearn 完成 Launch（ELO 排行、Leitner/Smart Study、Chrome 擴充）。<br/>• 研究 KB 課程中的 AI 圖像日記與遊戲化設計。<br/>• 準備分享一年的 #BuildInPublic 心得。</p>
+            <div style="margin-top:10px" class="stack">
+              <span class="chip">JavaScript / React</span>
+              <span class="chip">MongoDB · Redis</span>
+              <span class="chip">AWS · Railway</span>
+              <span class="chip">KB / SEL / CRT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="projects">
+      <div class="section-title">
+        <h2>✨ 專案 Projects</h2>
+        <a class="pill" href="mailto:hello@example.com">合作洽談</a>
+      </div>
+      <div class="grid projects">
+        <div class="project card">
+          <h3>Nebulearn — AI 原生間隔重複學習</h3>
+          <p class="muted">支援 Leitner / SM2 / FSRS、AI 自動出題、題庫共享、ELO 排行與學習統計。專注於「完整學習流程」與精緻互動體驗。</p>
+          <div class="tags"><span class="tag">React</span><span class="tag">MongoDB</span><span class="tag">AWS</span><span class="tag">Chrome Ext</span></div>
+        </div>
+        <div class="project card">
+          <h3>KB × AI 圖像式日記</h3>
+          <p class="muted">結合正向心理學與知識建構，透過 AI 生成圖像日記與翻轉學習流程，提升學生反思深度與社群對話品質。</p>
+          <div class="tags"><span class="tag">Positive Psych</span><span class="tag">Knowledge Building</span><span class="tag">Gamification</span></div>
+        </div>
+        <div class="project card">
+          <h3>Chess Tools in Python</h3>
+          <p class="muted">多種棋盤組合最佳化與演算法實作（後、象、馬的互不攻擊問題），含可視化與效能比較。</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Algorithms</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="writing">
+      <div class="section-title">
+        <h2>📝 文章 Writing</h2>
+        <a class="pill" href="#">RSS</a>
+      </div>
+      <div class="grid posts">
+        <div class="post card">
+          <div class="meta">2025-08-13 · #BuildInPublic</div>
+          <h3>407 天：從沮喪到產品清晰度（Nebulearn 的設計抉擇）</h3>
+          <p class="muted">談如何在一堆功能取捨中，回到「完整學習體驗」本質：題目輸入→學習→回顧→統計→持續精進。</p>
+          <div class="tags"><span class="tag">Leitner</span><span class="tag">ELO</span><span class="tag">UX</span></div>
+        </div>
+        <div class="post card">
+          <div class="meta">2025-07-30 · Research</div>
+          <h3>用 KB 與 SEL 重新設計「課堂參與」</h3>
+          <p class="muted">將想法（ideas）作為學習單位，設計促進持續改進的社群對話機制，連結學生的文化脈絡與自我效能。</p>
+          <div class="tags"><span class="tag">KB</span><span class="tag">SEL</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-title">
+        <h2>👋 關於我</h2>
+        <a class="pill" href="#">下載簡歷（PDF）</a>
+      </div>
+      <div class="card">
+        <p class="muted">Hi，我是 <b>KB SIG</b>。目前就讀於多倫多大學（UofT）工程學院，專注 AI × 教育科技。喜歡把複雜問題拆解成可迭代的系統，並以資料驅動改進學習流程。研究興趣涵蓋：間隔重複、知識建構、文化回應式教學、正向心理學、以及教育設施與空間對學習的影響。</p>
+        <div class="stack" style="margin-top:10px">
+          <span class="pill">📍 Taipei / Toronto</span>
+          <span class="pill">📧 hello@example.com</span>
+          <span class="pill">🐦 @yourhandle</span>
+          <span class="pill">🌐 nebulearn.com</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-title">
+        <h2>📫 聯絡</h2>
+        <span></span>
+      </div>
+      <div class="card">
+        <p>歡迎來信或私訊，研究合作、產品交流、或演講工作坊都可以：
+          <a href="mailto:hello@example.com">hello@example.com</a>
+        </p>
+        <div class="stack">
+          <a class="btn" href="mailto:hello@example.com">Email</a>
+          <a class="btn" target="_blank" rel="noopener" href="https://x.com">Twitter/X</a>
+          <a class="btn" target="_blank" rel="noopener" href="https://www.linkedin.com">LinkedIn</a>
+          <a class="btn" target="_blank" rel="noopener" href="https://github.com">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"></div>
+
+    <footer>
+      <div>© <span id="year"></span> KB SIG — Built with ♥︎, React (CDN), and a sprinkle of cosmic gradients.</div>
+    </footer>
+  </main>
+
+  <!-- React (CDN) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script>
+    // Minimal React mount (for future components; current page is static HTML for speed).
+    const Year = () => React.createElement(React.Fragment, null, new Date().getFullYear());
+    ReactDOM.createRoot(document.getElementById('year')).render(React.createElement(Year));
+
+    // Smooth hash scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+  </script>
+</body>
+</html>
